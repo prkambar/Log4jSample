@@ -1,0 +1,122 @@
+SDLC Env:
+1. Dev			: Developer Can debug the code and get the info about the error/exception is he is facing at line. 
+2. QA Test		: 
+3. UAT			: User Acceptance Test Env - 
+4. Production	: 
+
+*Logging: It is the process of getting/fetching success, warning, error/exception messge from server while it is running.
+
+*Log4j : Is a logging tool. It is a pure java application and can be used with java only.
+	
+	==> By using Log4j, we can get log messages and store in 
+	- File (log File)**.log
+	- Database
+	- Email
+	- Console (print on console)
+	
+	==> By using log files, Dev/Support teams identifies the mistake and fix code 
+	
+	==> Component of Log4j
+	a. Logger
+	b. Appender
+	c. Layout 
+ 	
+ 	1. Entity/Model class -> Variable set/get. We usually do not implement logger here.
+ 	2. controllers/restController: We usually do implement logger here.
+ 	
+ 	a. Logger Object [Which Class]
+ 	 - This Object must be created inside class for which Log4j is required. Ex. Controllers, Services, Repository..etc Needs Log4j Server. If we get any exception/errors inside these c;asses we can trace those into log File.
+ 	 - Do not Create logger object if we dont want to logging for class. Ex. Model/Entity
+ 	 
+ 	 Code Ex:
+ 	 	private static Logger log = Logger.getLogger(TestApp.class);
+ 	 	private static Logger log = Logger.getLogger(EmployeeRestController.class);
+ 	 	
+ 	 	
+ 	b. Appender: [Where to Print]
+ 	 - Every location where we store data is called Appender.
+ 	 - Appender is used to where to store log messages.
+ 	 ==> Types are
+ 	 	1. consoleAppeneder : print log message on console
+ 	 	2. FileAppeneder ** : print log message in .log file.
+ 	 	3. JDBCAppeneder 	: Store log message inside database table.
+ 	 	4. FTP/TelnetAppeneder : Send data from one server to another server
+ 	 	5. SMTP Appender : Send log message using Email.
+ 	 
+ 	 
+ 	 
+ 	 c. Layout [How to print]
+ 	 - how you want to print. It indicates message format that should be printed on appender.
+ 	 a. Simple Layout  : Print message as int is given by application.
+ 	 b. HTML Layout    : Print message as HTML file.
+ 	 c. XML layout     : Print message as XMl file. 
+ 	 d: *** Pattern Layout :Print message as given pattern by programmer.
+ 	 
+ 	---------------------------------------------------------------------------
+ 	
+ 	A) Priority Methods :
+ 	   These are pre-defined methods given inside logger object. By using these methods we have to print message as appender
+ 	----------------------------------------------	
+ 		SLNo	Name			Methods
+ 	----------------------------------------------
+ 		1.		Debug			debug(msg)
+ 		2. 		INFO			info(mgs)
+ 		3. 		WARN				warn(msg)
+ 		4.		ERROR			error(msg)
+ 		5.		FATAL			fatal(msg)
+ 		-NA-	OFF				-NA-
+ 	----------------------------------------------
+ 	When to use these methods:
+ 	**Debug : This methods is used to print final /sucess message.
+ 			  Ex. Emp created with ID-EMP-01 successfully.
+ 	
+ 	**INFO	: This method is used to print current status in execution.
+ 			  ex : Request came to controller method, OR Object sent to service method, OR service returned back to controller.
+ 	
+ 	*WARN	: This method is used to print warning in application.
+ 			  ex. File Object is created but never closed. OR Variable is created but not used.		 	 	
+ 			 	
+ 	**ERROR : This method is used to print any general exception.
+ 			 EX. NullPointerException, ArrayIndexOutIfBoundException. etc
+ 			 
+ 	*FATAl	: This method is used to print any high level exception that makes Stopping application usage.
+ 			EX. Database connection is not working. Or Network/MiddleWare Server is down.
+ 			
+ 			
+ #Ex1:------------------------------------------------------------------------------------------------------
+ 		1. Create Maven Application 
+ 		2. Add following properties and dependencies in POM.xml file
+ 			<properties>
+				<maven.compiler.source>1.8</maven.compiler.source>
+				<maven.compiler.target>1.8</maven.compiler.target>
+			</properties>
+			<dependencies>
+				<dependency>
+					<groupId>log4j</groupId>
+					<artifactId>log4j</artifactId>
+					<version>1.2.17</version>
+				</dependency>
+			</dependencies>
+		3. Create testApp class
+				
+#Notes: For pattern printing-------------------------------------------------------------------
+
+A) DateTime Patterns
+	-> %d 	: data abd time
+			
+			1. %d
+			2. %d{dd-MMM-yy hh:mm:ss SSS}
+			3. %d{dd-MM-yy hh:mm:ss SSS}
+			4. %d{hh:mm:ss}
+	-> %C	: print currnet class name
+	-> %M	: print currnet method name
+	-> %m 	: message
+	-> %p	: Priority method names
+	-> %L	: Line Number
+	-> %l	: Line number with link
+	-> %n	: new Line
+	-> %r	: time in millisecond
+	-> %% 	: to print one '%' Symbol
+	-> We can use our own symbol too. [], /
+	One Example : "%d-%C[%M]: {%p}=%,<%L>%n"			 
+ 				
