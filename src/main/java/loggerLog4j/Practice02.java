@@ -20,7 +20,7 @@ public class Practice02 {
 		
 		log.addAppender(append);
 		
-		log.debug(append);
+		log.info(append);
 	}
 		
 }
